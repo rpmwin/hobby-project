@@ -3,10 +3,12 @@ import React, { useState } from "react";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useNavigate } from "react-router-dom";
+import { useAuth } from "../helpers/AuthProvider";
 
 function RetailerLogin() {
     const [user, setUser] = useState({});
     const navigate = useNavigate();
+    const { login } = useAuth();
 
     const loginUser = async (e) => {
         try {
@@ -18,7 +20,7 @@ function RetailerLogin() {
                 })
                 .then((response) => {
                     setTimeout(() => {
-                        navigate("/");
+                        navigate("/profile");
                     }, 2000);
                 });
         } catch (error) {
@@ -43,6 +45,7 @@ function RetailerLogin() {
 
             // Set token in headers for subsequent requests
             axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
+            login();
         } catch (error) {
             throw error;
         }

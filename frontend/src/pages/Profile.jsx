@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { NavLink } from "react-router-dom";
 
 const Profile = () => {
     const [user, setUser] = useState(null);
@@ -12,6 +13,7 @@ const Profile = () => {
         harvestDate: "",
         estimatedYield: "",
     });
+    const [showCrops, setShowCrops] = useState(true);
 
     const fetchUserData = async () => {
         try {
@@ -101,6 +103,22 @@ const Profile = () => {
     return (
         <div className="min-h-screen bg-gray-900 text-white p-6 flex flex-col">
             <h1 className="text-3xl font-semibold mb-6">Profile Page</h1>
+            <div className="my-8">
+                <NavLink
+                    to="/allcrops"
+                    className="px-9 py-5 m-3 duration-300 uppercase bg-slate-600 w-max hover:bg-orange-700 rounded-lg"
+                >
+                    all-crops
+                </NavLink>
+                <NavLink
+                    to="https://kvk.icar.gov.in/"
+                    target="_blank"
+                    className="px-9 py-5 m-3 duration-300 uppercase bg-slate-600 w-max hover:bg-orange-700 rounded-lg"
+                >
+                    KVK - LINK
+                </NavLink>
+
+            </div>
             {loading ? (
                 <p>Loading...</p>
             ) : user ? (
@@ -108,9 +126,8 @@ const Profile = () => {
                     <div className="bg-gray-800 p-6 rounded-lg mr-6 flex-shrink-0">
                         <div className="h-32 w-32 rounded-full overflow-hidden">
                             <img
-                                src={`https://avatars.dicebear.com/api/avataaars/${user.name}.svg`}
+                                src={`https://avatars.dicebear.com/api/avataaars/${user.email}.svg`}
                                 alt="avatar"
-                                className="w-full h-full"
                             />
                         </div>
                     </div>
@@ -141,117 +158,142 @@ const Profile = () => {
             ) : (
                 <p>User not found</p>
             )}
-            <div className="bg-gray-800 p-6 rounded-lg mb-6">
-                <h2 className="text-xl font-semibold mb-4">Crop Details</h2>
-                <table className="table-auto w-full">
-                    <thead>
-                        <tr>
-                            <th className="px-4 py-2">Crop Name</th>
-                            <th className="px-4 py-2">Planting Date</th>
-                            <th className="px-4 py-2">Harvest Date</th>
-                            <th className="px-4 py-2">Estimated Yield</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {user &&
-                            user.crops.map((crop, index) => (
-                                <tr key={index}>
-                                    <td className="border px-4 py-2">
-                                        {crop.cropName}
-                                    </td>
-                                    <td className="border px-4 py-2">
-                                        {crop.plantingDate}
-                                    </td>
-                                    <td className="border px-4 py-2">
-                                        {crop.harvestDate}
-                                    </td>
-                                    <td className="border px-4 py-2">
-                                        {crop.estimatedYield}
-                                    </td>
-                                </tr>
-                            ))}
-                    </tbody>
-                </table>
-            </div>
-            <div className="bg-gray-800 p-6 rounded-lg flex-grow">
-                <h2 className="text-xl font-semibold mb-4">Add New Crop</h2>
-                <form onSubmit={handleSubmit}>
-                    <div className="flex flex-col mb-4">
-                        <label
-                            htmlFor="cropName"
-                            className="text-lg font-semibold mb-2"
+            { user  && (
+                <>
+                    <div className="bg-gray-800 p-6 rounded-lg mb-6">
+                        <button
+                            className="px-4 py-2 bg-green-600 text-white font-semibold rounded-lg mb-4"
+                            onClick={() => setShowCrops(!showCrops)}
                         >
-                            Crop Name:
-                        </label>
-                        <input
-                            type="text"
-                            id="cropName"
-                            name="cropName"
-                            value={newCrop.cropName}
-                            onChange={handleChange}
-                            className="px-3 py-2 bg-gray-700 rounded-lg"
-                            required
-                        />
+                            {showCrops ? "Hide Crops" : "Show Crops"}
+                        </button>
+                        {showCrops && (
+                            <>
+                                <h2 className="text-xl font-semibold mb-4">
+                                    Crop Details
+                                </h2>
+                                <table className="table-auto w-full">
+                                    <thead>
+                                        <tr>
+                                            <th className="px-4 py-2">
+                                                Crop Name
+                                            </th>
+                                            <th className="px-4 py-2">
+                                                Planting Date
+                                            </th>
+                                            <th className="px-4 py-2">
+                                                Harvest Date
+                                            </th>
+                                            <th className="px-4 py-2">
+                                                Estimated Yield
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {user.crops.map((crop, index) => (
+                                            <tr key={index}>
+                                                <td className="border px-4 py-2">
+                                                    {crop.cropName}
+                                                </td>
+                                                <td className="border px-4 py-2">
+                                                    {crop.plantingDate}
+                                                </td>
+                                                <td className="border px-4 py-2">
+                                                    {crop.harvestDate}
+                                                </td>
+                                                <td className="border px-4 py-2">
+                                                    {crop.estimatedYield}
+                                                </td>
+                                            </tr>
+                                        ))}
+                                    </tbody>
+                                </table>
+                            </>
+                        )}
                     </div>
-                    <div className="flex flex-col mb-4">
-                        <label
-                            htmlFor="plantingDate"
-                            className="text-lg font-semibold mb-2"
-                        >
-                            Planting Date:
-                        </label>
-                        <input
-                            type="date"
-                            id="plantingDate"
-                            name="plantingDate"
-                            value={newCrop.plantingDate}
-                            onChange={handleChange}
-                            className="px-3 py-2 bg-gray-700 rounded-lg"
-                            required
-                        />
+                    <div className="bg-gray-800 p-6 rounded-lg flex-grow">
+                        <h2 className="text-xl font-semibold mb-4">
+                            Add New Crop
+                        </h2>
+                        <form onSubmit={handleSubmit}>
+                            <div className="flex flex-col mb-4">
+                                <label
+                                    htmlFor="cropName"
+                                    className="text-lg font-semibold mb-2"
+                                >
+                                    Crop Name:
+                                </label>
+                                <input
+                                    type="text"
+                                    id="cropName"
+                                    name="cropName"
+                                    value={newCrop.cropName}
+                                    onChange={handleChange}
+                                    className="px-3 py-2 bg-gray-700 rounded-lg"
+                                    required
+                                />
+                            </div>
+                            <div className="flex flex-col mb-4">
+                                <label
+                                    htmlFor="plantingDate"
+                                    className="text-lg font-semibold mb-2"
+                                >
+                                    Planting Date:
+                                </label>
+                                <input
+                                    type="date"
+                                    id="plantingDate"
+                                    name="plantingDate"
+                                    value={newCrop.plantingDate}
+                                    onChange={handleChange}
+                                    className="px-3 py-2 bg-gray-700 rounded-lg"
+                                    required
+                                />
+                            </div>
+                            <div className="flex flex-col mb-4">
+                                <label
+                                    htmlFor="harvestDate"
+                                    className="text-lg font-semibold mb-2"
+                                >
+                                    Harvest Date:
+                                </label>
+                                <input
+                                    type="date"
+                                    id="harvestDate"
+                                    name="harvestDate"
+                                    value={newCrop.harvestDate}
+                                    onChange={handleChange}
+                                    className="px-3 py-2 bg-gray-700 rounded-lg"
+                                    required
+                                />
+                            </div>
+                            <div className="flex flex-col mb-4">
+                                <label
+                                    htmlFor="estimatedYield"
+                                    className="text-lg font-semibold mb-2"
+                                >
+                                    Estimated Yield:
+                                </label>
+                                <input
+                                    type="number"
+                                    id="estimatedYield"
+                                    name="estimatedYield"
+                                    value={newCrop.estimatedYield}
+                                    onChange={handleChange}
+                                    className="px-3 py-2 bg-gray-700 rounded-lg"
+                                    required
+                                />
+                            </div>
+                            <button
+                                type="submit"
+                                className="px-4 py-2 bg-green-600 text-white font-semibold rounded-lg"
+                            >
+                                Add Crop
+                            </button>
+                        </form>
                     </div>
-                    <div className="flex flex-col mb-4">
-                        <label
-                            htmlFor="harvestDate"
-                            className="text-lg font-semibold mb-2"
-                        >
-                            Harvest Date:
-                        </label>
-                        <input
-                            type="date"
-                            id="harvestDate"
-                            name="harvestDate"
-                            value={newCrop.harvestDate}
-                            onChange={handleChange}
-                            className="px-3 py-2 bg-gray-700 rounded-lg"
-                            required
-                        />
-                    </div>
-                    <div className="flex flex-col mb-4">
-                        <label
-                            htmlFor="estimatedYield"
-                            className="text-lg font-semibold mb-2"
-                        >
-                            Estimated Yield:
-                        </label>
-                        <input
-                            type="number"
-                            id="estimatedYield"
-                            name="estimatedYield"
-                            value={newCrop.estimatedYield}
-                            onChange={handleChange}
-                            className="px-3 py-2 bg-gray-700 rounded-lg"
-                            required
-                        />
-                    </div>
-                    <button
-                        type="submit"
-                        className="px-4 py-2 bg-green-600 text-white font-semibold rounded-lg"
-                    >
-                        Add Crop
-                    </button>
-                </form>
-            </div>
+                </>
+            )}
             <ToastContainer />
         </div>
     );
