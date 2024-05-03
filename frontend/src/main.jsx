@@ -19,6 +19,7 @@ import RetailerSignup from "./pages/RetailerSignup.jsx";
 import Profile from "./pages/Profile.jsx";
 import { AuthProvider } from "./helpers/AuthProvider.jsx";
 import ProtectedRoute from "./helpers/ProtectedRoute.jsx";
+import AllCrops from "./pages/AllCrops.jsx";
 
 const router = createBrowserRouter(
     createRoutesFromElements(
@@ -57,6 +58,7 @@ const router = createBrowserRouter(
                     </>
                 }
             />
+            <Route path="allcrops/*" element={<AllCrops />} />
         </Route>
     )
 );

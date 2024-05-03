@@ -24,6 +24,7 @@ function Navbar() {
             >
                 Signup
             </NavLink>
+            
         </div>
     );
 }

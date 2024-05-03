@@ -4,8 +4,11 @@ import Farmer from "../models/Farmer.models.js";
 
 const addCrop = async (req, res) => {
     try {
-        const { cropName, plantingDate, harvestDate, estimatedYield, token } =
+        const { cropName, plantingDate, harvestDate, estimatedYield } =
             req.body;
+
+        // Assuming token is sent in the request headers
+        const token = req.headers.authorization.split(" ")[1];
 
         if (
             !cropName ||
@@ -25,8 +28,6 @@ const addCrop = async (req, res) => {
 
         const farmer = await Farmer.findById(farmerId);
 
-        console.log(farmer);
-
         if (!farmer) {
             return res.status(404).json({ message: "Farmer not found" });
         }
@@ -36,19 +37,21 @@ const addCrop = async (req, res) => {
             plantingDate,
             harvestDate,
             estimatedYield,
+            farmerId: farmer._id,
+            farmerName: farmer.name,
+            farmerNumber: farmer.phone,
         });
 
         farmer.crops.push(crop);
 
         await farmer.save();
 
-        console.log("crop added: ", crop);
-
-        console.log("farmer updated: ", farmer);
-
-        return res.status(200).json({ crop });
+        return res
+            .status(200)
+            .json({ message: "Crop added successfully", crop });
     } catch (error) {
-        console.log(" some error occured in adding crop", error);
+        console.error("Error adding crop:", error);
+        return res.status(500).json({ message: "Internal server error" });
     }
 };
 

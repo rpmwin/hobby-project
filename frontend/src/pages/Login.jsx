@@ -20,7 +20,7 @@ function Login() {
                 })
                 .then((response) => {
                     setTimeout(() => {
-                        navigate("/");
+                        navigate("/profile");
                     }, 2000);
                 });
         } catch (error) {

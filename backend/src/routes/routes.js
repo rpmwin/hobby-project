@@ -6,7 +6,8 @@ import retailerSignup from "../controllers/retailerSignup.controllers.js";
 import addCrop from "../controllers/addcrop.controllers.js";
 import { getUser } from "../controllers/getUser.controllers.js";
 import authMiddleware from "../middleware/authMiddleware.js"; // Import the JWT authentication middleware
-
+import { findCrop } from "../controllers/findcrop.controllers.js";
+import getAllCrops from "../controllers/getallCrop.controllers.js";
 
 const router = Router();
 
@@ -19,10 +20,12 @@ router.post("/signup", signup);
 router.post("/login", login);
 router.post("/retailer-login", retailerLogin);
 router.post("/retailer-signup", retailerSignup);
+router.get("/get-user", getUser);
+router.get("/get-crop/:id", findCrop);
+router.post("/add-crop", addCrop);
+router.get("/all-crops", getAllCrops);
 
 // Protected routes - Apply JWT authentication middleware
 router.use(authMiddleware);
-router.post("/add-crop", addCrop);
-router.get("/get-user", getUser);
 
 export default router;

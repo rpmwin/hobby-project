@@ -4,10 +4,11 @@ import decodeToken from "../helpers/decodeToken.js";
 
 export const getUser = async (req, res) => {
     try {
-        const { token } = req.body;
-
+        const token = req.headers.authorization.split(" ")[1];
         if (!token) {
-            return res.status(400).json({ message: "All fields are required" });
+            return res
+                .status(400)
+                .json({ message: "Authorization header is missing" });
         }
 
         const { farmerId, farmerName, retailerId, retailerName } =
@@ -18,7 +19,7 @@ export const getUser = async (req, res) => {
         }
 
         if (farmerId) {
-            const farmer = await Farmer.findById(farmerId);
+            const farmer = await Farmer.findById(farmerId).select("-password");
             console.log(farmer);
             return res.status(200).json({ farmer });
         } else if (retailerId) {
@@ -28,5 +29,6 @@ export const getUser = async (req, res) => {
         }
     } catch (error) {
         console.log(error);
+        return res.status(500).json({ message: "Internal server error" });
     }
 };

@@ -18,11 +18,17 @@ function Home() {
                 >
                     farmer
                 </NavLink>
-                <NavLink
+                {/* <NavLink
                     to={"/profile"}
                     className="px-9 py-5 m-3 duration-300 uppercase bg-slate-600 w-max hover:bg-orange-700 rounded-lg"
                 >
                     PROFILE
+                </NavLink> */}
+                <NavLink
+                    to="/allcrops"
+                    className="px-9 py-5 m-3 duration-300 uppercase bg-slate-600 w-max hover:bg-orange-700 rounded-lg"
+                >
+                    all-crops
                 </NavLink>
             </div>
         </div>
