@@ -5,6 +5,7 @@
   "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "node src/index.js",
     "start": "nodemon src/index.js"
   },
   "keywords": [],
