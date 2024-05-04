@@ -30,6 +30,7 @@ await connectDB()
         const io = new Server(server, {
             cors: {
                 origin: "*",
+                methods: ["GET", "POST"],
                 credentials: true,
             },
         });
@@ -46,6 +47,8 @@ await connectDB()
                     socket.id
                 );
             });
+
+            socket
 
             socket.on("disconnect", () => {
                 console.log("User disconnected:", socket.id);

@@ -3,8 +3,10 @@ import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { NavLink } from "react-router-dom";
+import { useAuth } from "../helpers/AuthProvider";
 
 const Profile = () => {
+    const { userInfo, retailer } = useAuth();
     const [user, setUser] = useState(null);
     const [loading, setLoading] = useState(true);
     const [newCrop, setNewCrop] = useState({
@@ -28,6 +30,13 @@ const Profile = () => {
             );
 
             const userData = response.data.farmer || response.data.retailer;
+
+            if (!userData) {
+                throw new Error("User data not found");
+            }
+
+            userInfo(userData);
+            console.log("userData: ", userData);
 
             const cropIds = userData.crops;
             const cropsData = await Promise.all(
@@ -110,14 +119,15 @@ const Profile = () => {
                 >
                     all-crops
                 </NavLink>
-                <NavLink
-                    to="https://kvk.icar.gov.in/"
-                    target="_blank"
-                    className="px-9 py-5 m-3 duration-300 uppercase bg-slate-600 w-max hover:bg-orange-700 rounded-lg"
-                >
-                    KVK - LINK
-                </NavLink>
-
+                {user && !retailer && (
+                    <NavLink
+                        to="https://kvk.icar.gov.in/"
+                        target="_blank"
+                        className="px-9 py-5 m-3 duration-300 uppercase bg-slate-600 w-max hover:bg-orange-700 rounded-lg"
+                    >
+                        KVK - LINK
+                    </NavLink>
+                )}
             </div>
             {loading ? (
                 <p>Loading...</p>
@@ -147,18 +157,20 @@ const Profile = () => {
                             <span className="font-semibold mr-2">Phone:</span>
                             {user.phone}
                         </div>
-                        <div>
-                            <span className="font-semibold mr-2">
-                                Land Number:
-                            </span>
-                            {user.landnumber}
-                        </div>
+                        {user && !retailer && (
+                            <div>
+                                <span className="font-semibold mr-2">
+                                    Land Number:
+                                </span>
+                                {user.landnumber}
+                            </div>
+                        )}
                     </div>
                 </div>
             ) : (
                 <p>User not found</p>
             )}
-            { user  && (
+            {user && !retailer && (
                 <>
                     <div className="bg-gray-800 p-6 rounded-lg mb-6">
                         <button

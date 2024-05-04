@@ -7,7 +7,7 @@ function Navbar() {
             <NavLink
                 to="login"
                 className={({ isActive }) =>
-                    `text-3xl px-10 p-4 bg-slate-500 m-3 rounded-lg hover:bg-slate-600 ${
+                    `text-3xl px-10 p-4 bg-transparent border duration-700 m-3 rounded-lg hover:bg-slate-600 ${
                         isActive ? "bg-orange-600" : ""
                     }`
                 }
@@ -17,7 +17,7 @@ function Navbar() {
             <NavLink
                 to="signup"
                 className={({ isActive }) =>
-                    `text-3xl px-10 p-4 bg-slate-500 m-3 rounded-lg hover:bg-slate-600 ${
+                    `text-3xl px-10 p-4 bg-transparent border duration-700 m-3 rounded-lg hover:bg-slate-600 ${
                         isActive ? "bg-orange-600" : ""
                     }`
                 }

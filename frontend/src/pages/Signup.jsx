@@ -4,6 +4,7 @@ import { BrowserRouter as Router } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import FARMERsignup from "../assets/FARMERsignup.jpg";
 
 function Signup() {
     const [user, setUser] = useState({});
@@ -50,7 +51,7 @@ function Signup() {
     }, [user]);
 
     return (
-        <div>
+        <div className="w-screen h-screen flex justify-center items-center flex-col" style={{backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.5)), url(${FARMERsignup})`}}>
             <h1> FARMER - SIGNUP</h1>
 
             <form

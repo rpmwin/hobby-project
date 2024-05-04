@@ -20,6 +20,7 @@ import Profile from "./pages/Profile.jsx";
 import { AuthProvider } from "./helpers/AuthProvider.jsx";
 import ProtectedRoute from "./helpers/ProtectedRoute.jsx";
 import AllCrops from "./pages/AllCrops.jsx";
+import MiddleOutlet from "./pages/MiddleOutlet.jsx";
 
 const router = createBrowserRouter(
     createRoutesFromElements(
@@ -29,8 +30,7 @@ const router = createBrowserRouter(
                 path="retailer/*"
                 element={
                     <>
-                        <Navbar />
-                        <Outlet />
+                        <MiddleOutlet />
                     </>
                 }
             >
@@ -41,8 +41,7 @@ const router = createBrowserRouter(
                 path="farmer/*"
                 element={
                     <>
-                        <Navbar />
-                        <Outlet />
+                        <MiddleOutlet />
                     </>
                 }
             >

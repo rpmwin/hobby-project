@@ -4,11 +4,12 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../helpers/AuthProvider";
+import RETAILERbg from "../assets/RETAILERbg.svg";
 
 function RetailerLogin() {
     const [user, setUser] = useState({});
     const navigate = useNavigate();
-    const { login } = useAuth();
+    const { login , isReatailer } = useAuth();
 
     const loginUser = async (e) => {
         try {
@@ -46,13 +47,15 @@ function RetailerLogin() {
             // Set token in headers for subsequent requests
             axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
             login();
+            isReatailer();
         } catch (error) {
             throw error;
         }
     };
 
     return (
-        <div>
+        <div className=" w-screen h-screen  flex flex-col justify-center items-center"  style={{ backgroundImage: ` url(${RETAILERbg})` }}>
+           
             <h1> RETAILER - LOGIN</h1>
 
             <form
