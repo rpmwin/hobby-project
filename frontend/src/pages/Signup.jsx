@@ -116,7 +116,7 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import farmerSignupBackground from "../assets/homepage.jpg"; // Import the background image
+import farmerSignupBackground from "../assets/trialbg.jpg"; // Import the background image
 
 function Signup() {
     const [user, setUser] = useState({});
@@ -177,7 +177,7 @@ function Signup() {
             }}
         >
             <div>
-                <h1> FARMER - SIGNUP</h1>
+                <h1 style={{color:"darkgreen",fontWeight:1000}}> FARMER - SIGNUP</h1>
 
                 <form
                     className="flex flex-col justify-center items-center"
@@ -222,7 +222,7 @@ function Signup() {
                         onChange={handleInputChange}
                     />
                     <button
-                        className={`btn p-4 mt-4 bg-green-500 hover:bg-green-800 rounded duration-300 ${
+                        className={`btn p-4 mt-4 bg-green-400 border-4 border-white hover:bg-green-800 rounded duration-300 text-black hover:text-white text- ${
                             buttonDisabled ? "opacity-50 cursor-not-allowed" : ""
                         }`}
                         disabled={buttonDisabled}
